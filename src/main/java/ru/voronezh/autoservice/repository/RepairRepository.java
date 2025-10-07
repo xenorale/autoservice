@@ -5,5 +5,6 @@ import java.util.List;
 
 public interface RepairRepository {
     void create(Repair repair);
+    void delete(int id);
     List<Repair> findAll();
 }

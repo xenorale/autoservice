@@ -31,6 +31,19 @@ public class RepairRepositoryImpl implements RepairRepository {
     }
 
     @Override
+    public void delete(int id) {
+        String sql = "DELETE FROM repairs WHERE repair_id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            System.out.println("✓ Ремонт удалён");
+        } catch (SQLException e) {
+            throw new RuntimeException("Ошибка: " + e.getMessage());
+        }
+    }
+
+    @Override
     public List<Repair> findAll() {
         String sql = "SELECT * FROM repairs LIMIT 50";
         List<Repair> repairs = new ArrayList<>();

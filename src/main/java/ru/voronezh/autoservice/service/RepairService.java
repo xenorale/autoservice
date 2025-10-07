@@ -5,5 +5,6 @@ import java.util.List;
 
 public interface RepairService {
     void addRepair(Repair repair);
+    void deleteRepair(int id);
     List<Repair> getAllRepairs();
 }

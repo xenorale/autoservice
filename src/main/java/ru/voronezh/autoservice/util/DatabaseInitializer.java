@@ -38,6 +38,11 @@ public class DatabaseInitializer {
                     "appeal_date DATE, " +
                     "malfunction_description TEXT)");
 
+            stmt.execute("INSERT INTO employees (first_name, last_name, position, salary, experience) " +
+                    "VALUES ('Алексей', 'Механиков', 'Механик', 50000, 5), " +
+                    "('Дмитрий', 'Ремонтов', 'Мастер', 65000, 8)");
+
+
             System.out.println("Database initialized successfully!");
 
         } catch (Exception e) {

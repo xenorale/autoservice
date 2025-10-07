@@ -18,6 +18,11 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
+    public void deleteRepair(int id) {
+        repository.delete(id);
+    }
+
+    @Override
     public List<Repair> getAllRepairs() {
         return repository.findAll();
     }
