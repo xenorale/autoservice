@@ -1,7 +1,13 @@
 package ru.voronezh.autoservice.controller;
 
+import ru.voronezh.autoservice.model.Car;
 import ru.voronezh.autoservice.model.Employee;
+import ru.voronezh.autoservice.model.Owner;
 import ru.voronezh.autoservice.model.Repair;
+import ru.voronezh.autoservice.repository.OwnerRepository;
+import ru.voronezh.autoservice.repository.OwnerRepositoryImpl;
+import ru.voronezh.autoservice.service.CarService;
+import ru.voronezh.autoservice.service.CarServiceImpl;
 import ru.voronezh.autoservice.service.EmployeeService;
 import ru.voronezh.autoservice.service.EmployeeServiceImpl;
 import ru.voronezh.autoservice.service.RepairService;
@@ -68,11 +74,32 @@ public class AutoserviceController {
         System.out.println("│                   ДОБАВИТЬ РЕМОНТ                           │");
         System.out.println("└─────────────────────────────────────────────────────────────┘");
 
-        // Сначала покажем доступных сотрудников
+        // Показываем список автомобилей
+        System.out.println("\nДоступные автомобили:");
+        CarService carService = new CarServiceImpl();
+        OwnerRepository ownerRepo = new OwnerRepositoryImpl();
+        List<Car> cars = carService.getAllCars();
+
+        if (cars.isEmpty()) {
+            System.out.println("  ⚠ Автомобилей нет в базе. Сначала добавьте автомобиль.");
+            return;
+        }
+
+        for (Car car : cars) {
+            Owner owner = ownerRepo.findById(car.getOwnerId());
+            String ownerName = owner != null ? owner.getFirstName() + " " + owner.getLastName() : "Неизвестен";
+            System.out.printf("  ID: %-3d | %s %s | Владелец: %s%n",
+                    car.getCarId(), car.getBrand(), car.getPlateNumber(), ownerName);
+        }
+
+        System.out.print("\n➤ ID автомобиля: ");
+        int carId = scanner.nextInt();
+
+        // Показываем сотрудников
         System.out.println("\nДоступные сотрудники:");
         List<Employee> employees = employeeService.getAllEmployees();
         if (employees.isEmpty()) {
-            System.out.println("  ⚠ Сотрудников нет в базе. Сначала добавьте сотрудника.");
+            System.out.println("  ⚠ Сотрудников нет в базе.");
             return;
         }
         for (Employee e : employees) {
@@ -80,10 +107,7 @@ public class AutoserviceController {
                     e.getEmployeeId(), e.getFirstName(), e.getLastName(), e.getPosition());
         }
 
-        System.out.print("\n➤ ID автомобиля: ");
-        int carId = scanner.nextInt();
-
-        System.out.print("➤ ID сотрудника: ");
+        System.out.print("\n➤ ID сотрудника: ");
         int empId = scanner.nextInt();
         scanner.nextLine();
 

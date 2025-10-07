@@ -2,6 +2,7 @@ package ru.voronezh.autoservice.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DatabaseInitializer {
@@ -38,10 +39,27 @@ public class DatabaseInitializer {
                     "appeal_date DATE, " +
                     "malfunction_description TEXT)");
 
-            stmt.execute("INSERT INTO employees (first_name, last_name, position, salary, experience) " +
-                    "VALUES ('Алексей', 'Механиков', 'Механик', 50000, 5), " +
-                    "('Дмитрий', 'Ремонтов', 'Мастер', 65000, 8)");
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM employees");
+            if (rs.next() && rs.getInt(1) == 0) {
+                stmt.execute("INSERT INTO employees (first_name, last_name, position, salary, experience) " +
+                        "VALUES ('Алексей', 'Механиков', 'Механик', 50000, 5), " +
+                        "('Дмитрий', 'Ремонтов', 'Мастер', 65000, 8)");
+                System.out.println("✓ Добавлены тестовые сотрудники");
+            }
 
+            // Добавляем тестовых владельцев и автомобили (только если их нет)
+            ResultSet rsCars = stmt.executeQuery("SELECT COUNT(*) FROM cars");
+            if (rsCars.next() && rsCars.getInt(1) == 0) {
+                stmt.execute("INSERT INTO owners (first_name, last_name, phone) " +
+                        "VALUES ('Иван', 'Петров', '+7-900-123-45-67'), " +
+                        "('Мария', 'Сидорова', '+7-900-765-43-21')");
+
+                stmt.execute("INSERT INTO cars (owner_id, plate_number, brand) " +
+                        "VALUES (1, 'А123БВ', 'Lada Granta'), " +
+                        "(2, 'В456ГД', 'Toyota Camry')");
+
+                System.out.println("✓ Добавлены тестовые владельцы и автомобили");
+            }
 
             System.out.println("Database initialized successfully!");
 
