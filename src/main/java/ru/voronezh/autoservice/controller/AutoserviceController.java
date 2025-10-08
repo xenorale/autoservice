@@ -24,9 +24,9 @@ public class AutoserviceController {
 
     public void run() {
         while (true) {
-            System.out.println("\n╔════════════════════════════╗");
-            System.out.println("║      АВТОСЕРВИС МЕНЮ       ║");
-            System.out.println("╚════════════════════════════╝");
+            System.out.println("\n----------------------------");
+            System.out.println("      АВТОСЕРВИС МЕНЮ       ");
+            System.out.println("----------------------------");
             System.out.println("1. Показать все ремонты");
             System.out.println("2. Добавить ремонт");
             System.out.println("3. Удалить ремонт");
@@ -52,9 +52,9 @@ public class AutoserviceController {
     }
 
     private void showRepairs() {
-        System.out.println("\n┌─────────────────────────────────────────────────────────────┐");
-        System.out.println("│                    СПИСОК РЕМОНТОВ                          │");
-        System.out.println("└─────────────────────────────────────────────────────────────┘");
+        System.out.println("\n-------------------------------------------------------------");
+        System.out.println("                    СПИСОК РЕМОНТОВ                          ");
+        System.out.println("-------------------------------------------------------------");
 
         List<Repair> repairs = repairService.getAllRepairs();
         if (repairs.isEmpty()) {
@@ -64,15 +64,15 @@ public class AutoserviceController {
                 System.out.printf("  ID: %-3d | Авто: %-3d | Сотрудник: %-3d | Дата: %s%n",
                         r.getRepairId(), r.getCarId(), r.getEmployeeId(), r.getAppealDate());
                 System.out.printf("  Описание: %s%n", r.getMalfunctionDescription());
-                System.out.println("  ─────────────────────────────────────────────────────");
+                System.out.println("-----------------------------------------------------");
             }
         }
     }
 
     private void addRepair() {
-        System.out.println("\n┌─────────────────────────────────────────────────────────────┐");
-        System.out.println("│                   ДОБАВИТЬ РЕМОНТ                           │");
-        System.out.println("└─────────────────────────────────────────────────────────────┘");
+        System.out.println("\n-------------------------------------------------------------");
+        System.out.println("                   ДОБАВИТЬ РЕМОНТ                           ");
+        System.out.println("-------------------------------------------------------------");
 
         // Показываем список автомобилей
         System.out.println("\nДоступные автомобили:");
@@ -81,7 +81,7 @@ public class AutoserviceController {
         List<Car> cars = carService.getAllCars();
 
         if (cars.isEmpty()) {
-            System.out.println("  ⚠ Автомобилей нет в базе. Сначала добавьте автомобиль.");
+            System.out.println("  ! Автомобилей нет в базе. Сначала добавьте автомобиль.");
             return;
         }
 
@@ -124,9 +124,9 @@ public class AutoserviceController {
     }
 
     private void deleteRepair() {
-        System.out.println("\n┌─────────────────────────────────────────────────────────────┐");
-        System.out.println("│                   УДАЛИТЬ РЕМОНТ                            │");
-        System.out.println("└─────────────────────────────────────────────────────────────┘");
+        System.out.println("\n------------------------------------------------------------");
+        System.out.println("                   УДАЛИТЬ РЕМОНТ                            ");
+        System.out.println("-------------------------------------------------------------");
 
         showRepairs();
 
@@ -138,9 +138,9 @@ public class AutoserviceController {
     }
 
     private void showEmployees() {
-        System.out.println("\n┌─────────────────────────────────────────────────────────────┐");
-        System.out.println("│                  СПИСОК СОТРУДНИКОВ                         │");
-        System.out.println("└─────────────────────────────────────────────────────────────┘");
+        System.out.println("\n-------------------------------------------------------------");
+        System.out.println("                  СПИСОК СОТРУДНИКОВ                         ");
+        System.out.println("-------------------------------------------------------------");
 
         List<Employee> employees = employeeService.getAllEmployees();
         if (employees.isEmpty()) {
@@ -151,7 +151,7 @@ public class AutoserviceController {
                         e.getFirstName(), e.getLastName());
                 System.out.printf("  Должность: %-15s | Оклад: %,.2f₽ | Стаж: %d лет%n",
                         e.getPosition(), e.getSalary(), e.getExperience());
-                System.out.println("  ─────────────────────────────────────────────────────");
+                System.out.println("-----------------------------------------------------");
             }
         }
     }

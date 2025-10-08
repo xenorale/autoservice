@@ -47,7 +47,6 @@ public class DatabaseInitializer {
                 System.out.println("✓ Добавлены тестовые сотрудники");
             }
 
-            // Добавляем тестовых владельцев и автомобили (только если их нет)
             ResultSet rsCars = stmt.executeQuery("SELECT COUNT(*) FROM cars");
             if (rsCars.next() && rsCars.getInt(1) == 0) {
                 stmt.execute("INSERT INTO owners (first_name, last_name, phone) " +
