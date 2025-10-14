@@ -74,7 +74,6 @@ public class AutoserviceController {
         System.out.println("                   ДОБАВИТЬ РЕМОНТ                           ");
         System.out.println("-------------------------------------------------------------");
 
-        // Показываем список автомобилей
         System.out.println("\nДоступные автомобили:");
         CarService carService = new CarServiceImpl();
         OwnerRepository ownerRepo = new OwnerRepositoryImpl();
@@ -95,7 +94,6 @@ public class AutoserviceController {
         System.out.print("\n➤ ID автомобиля: ");
         int carId = scanner.nextInt();
 
-        // Показываем сотрудников
         System.out.println("\nДоступные сотрудники:");
         List<Employee> employees = employeeService.getAllEmployees();
         if (employees.isEmpty()) {
