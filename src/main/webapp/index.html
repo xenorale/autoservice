@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автосервис</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Система управления автосервисом</h1>
+
+<div class="tabs">
+    <button class="tab-btn active" onclick="showTab('repairs')">Ремонты</button>
+    <button class="tab-btn" onclick="showTab('cars')">Автомобили</button>
+    <button class="tab-btn" onclick="showTab('employees')">Сотрудники</button>
+</div>
+
+<div id="repairs-tab" class="tab-content active">
+    <h2>Список ремонтов</h2>
+    <div class="form-card">
+        <h3>Добавить ремонт</h3>
+        <form id="repair-form">
+            <select id="repair-car-id" required>
+                <option value="">Выберите автомобиль</option>
+            </select>
+
+            <select id="repair-employee-id" required>
+                <option value="">Выберите сотрудника</option>
+            </select>
+
+            <textarea id="repair-description" placeholder="Описание неисправности" required></textarea>
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+    <table id="repairs-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Автомобиль</th>
+            <th>Сотрудник</th>
+            <th>Дата</th>
+            <th>Описание</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div id="cars-tab" class="tab-content">
+    <h2>Список автомобилей</h2>
+    <table id="cars-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>ID владельца</th>
+            <th>Госномер</th>
+            <th>Марка</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div id="employees-tab" class="tab-content">
+    <h2>Список сотрудников</h2>
+    <table id="employees-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Должность</th>
+            <th>Зарплата</th>
+            <th>Стаж (лет)</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
