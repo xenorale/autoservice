@@ -1,26 +1,32 @@
 package ru.voronezh.autoservice.repository;
 
 import ru.voronezh.autoservice.model.Employee;
+import ru.voronezh.autoservice.util.DatabaseConnection;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRepositoryImpl implements EmployeeRepository {
-    private static final String URL = "jdbc:h2:~/autoservice";
-    private static final String USER = "sa";
-    private static final String PASS = "";
 
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASS);
+    private static final EmployeeRepositoryImpl INSTANCE = new EmployeeRepositoryImpl();
+
+    private EmployeeRepositoryImpl() {
+    }
+
+    public static EmployeeRepositoryImpl getInstance() {
+        return INSTANCE;
     }
 
     @Override
     public List<Employee> findAll() {
         String sql = "SELECT * FROM employees";
         List<Employee> employees = new ArrayList<>();
-        try (Connection conn = getConnection();
+
+        try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
                 Employee e = new Employee();
                 e.setEmployeeId(rs.getInt("employee_id"));
@@ -34,14 +40,17 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         } catch (SQLException ex) {
             throw new RuntimeException("Ошибка: " + ex.getMessage());
         }
+
         return employees;
     }
 
     @Override
     public void create(Employee employee) {
         String sql = "INSERT INTO employees (first_name, last_name, position, salary, experience) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = getConnection();
+
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, employee.getFirstName());
             ps.setString(2, employee.getLastName());
             ps.setString(3, employee.getPosition());

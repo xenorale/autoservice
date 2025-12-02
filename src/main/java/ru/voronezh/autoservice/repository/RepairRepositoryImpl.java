@@ -1,30 +1,35 @@
 package ru.voronezh.autoservice.repository;
 
 import ru.voronezh.autoservice.model.Repair;
+import ru.voronezh.autoservice.util.DatabaseConnection;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RepairRepositoryImpl implements RepairRepository {
-    private static final String URL = "jdbc:h2:~/autoservice";
-    private static final String USER = "sa";
-    private static final String PASS = "";
 
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASS);
+    private static final RepairRepositoryImpl INSTANCE = new RepairRepositoryImpl();
+
+    private RepairRepositoryImpl() {
+    }
+
+    public static RepairRepositoryImpl getInstance() {
+        return INSTANCE;
     }
 
     @Override
     public void create(Repair repair) {
         String sql = "INSERT INTO repairs (car_id, employee_id, appeal_date, malfunction_description) VALUES (?, ?, ?, ?)";
-        try (Connection conn = getConnection();
+
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, repair.getCarId());
             ps.setInt(2, repair.getEmployeeId());
             ps.setDate(3, Date.valueOf(repair.getAppealDate()));
             ps.setString(4, repair.getMalfunctionDescription());
             ps.executeUpdate();
-            System.out.println("✓ Ремонт добавлен");
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка: " + e.getMessage());
         }
@@ -33,11 +38,12 @@ public class RepairRepositoryImpl implements RepairRepository {
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM repairs WHERE repair_id = ?";
-        try (Connection conn = getConnection();
+
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, id);
             ps.executeUpdate();
-            System.out.println("✓ Ремонт удалён");
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка: " + e.getMessage());
         }
@@ -45,11 +51,13 @@ public class RepairRepositoryImpl implements RepairRepository {
 
     @Override
     public List<Repair> findAll() {
-        String sql = "SELECT * FROM repairs LIMIT 50";
+        String sql = "SELECT * FROM repairs";
         List<Repair> repairs = new ArrayList<>();
-        try (Connection conn = getConnection();
+
+        try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
                 Repair r = new Repair();
                 r.setRepairId(rs.getInt("repair_id"));
@@ -62,6 +70,7 @@ public class RepairRepositoryImpl implements RepairRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка: " + e.getMessage());
         }
+
         return repairs;
     }
 }

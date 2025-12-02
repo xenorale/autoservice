@@ -7,7 +7,7 @@ import ru.voronezh.autoservice.repository.EmployeeRepositoryImpl;
 import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
-    private final EmployeeRepository repository = new EmployeeRepositoryImpl();
+    private final EmployeeRepository repository = EmployeeRepositoryImpl.getInstance();
 
     @Override
     public List<Employee> getAllEmployees() {

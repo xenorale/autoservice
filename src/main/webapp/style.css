@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f0f0f0;
+}
+
+h1 {
+    color: #333;
+}
+
+.tabs {
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    margin-right: 5px;
+    background: #ddd;
+    border: none;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    background: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background: #667eea;
+    color: white;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input, textarea {
+    display: block;
+    width: 300px;
+    margin: 5px 0;
+    padding: 5px;
+}
+
+button {
+    padding: 8px 15px;
+    background: #667eea;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #5568d3;
+}
+
+.delete-btn {
+    background: #dc3545;
+    padding: 5px 10px;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+select {
+    display: block;
+    width: 300px;
+    margin: 5px 0;
+    padding: 5px;
+    border: 1px solid #ccc;
+}

@@ -7,7 +7,7 @@ import ru.voronezh.autoservice.repository.CarRepositoryImpl;
 import java.util.List;
 
 public class CarServiceImpl implements CarService {
-    private final CarRepository repository = new CarRepositoryImpl();
+    private final CarRepository repository = CarRepositoryImpl.getInstance();
 
     @Override
     public List<Car> getAllCars() {

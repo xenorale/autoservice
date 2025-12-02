@@ -1,24 +1,31 @@
 package ru.voronezh.autoservice.repository;
 
 import ru.voronezh.autoservice.model.Owner;
+import ru.voronezh.autoservice.util.DatabaseConnection;
+
 import java.sql.*;
 
 public class OwnerRepositoryImpl implements OwnerRepository {
-    private static final String URL = "jdbc:h2:~/autoservice";
-    private static final String USER = "sa";
-    private static final String PASS = "";
 
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASS);
+    private static final OwnerRepositoryImpl INSTANCE = new OwnerRepositoryImpl();
+
+    private OwnerRepositoryImpl() {
+    }
+
+    public static OwnerRepositoryImpl getInstance() {
+        return INSTANCE;
     }
 
     @Override
     public Owner findById(int id) {
         String sql = "SELECT * FROM owners WHERE owner_id = ?";
-        try (Connection conn = getConnection();
+
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
                 Owner o = new Owner();
                 o.setOwnerId(rs.getInt("owner_id"));
@@ -30,6 +37,7 @@ public class OwnerRepositoryImpl implements OwnerRepository {
         } catch (SQLException ex) {
             throw new RuntimeException("Ошибка: " + ex.getMessage());
         }
+
         return null;
     }
 }

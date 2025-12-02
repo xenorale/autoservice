@@ -7,7 +7,7 @@ import ru.voronezh.autoservice.repository.RepairRepositoryImpl;
 import java.util.List;
 
 public class RepairServiceImpl implements RepairService {
-    private final RepairRepository repository = new RepairRepositoryImpl();
+    private final RepairRepository repository = RepairRepositoryImpl.getInstance();
 
     @Override
     public void addRepair(Repair repair) {
